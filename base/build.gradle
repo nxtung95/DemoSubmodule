@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: '*.jar')
+    api 'org.springframework.boot:spring-boot-starter-web'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '6.9.1'
+}
+
+jar {
+    enabled = true
+}

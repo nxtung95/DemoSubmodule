@@ -1,0 +1,51 @@
+buildscript {
+    ext {
+        set("log4j2.version", "2.17.0")
+        springBootVersion = "2.6.1"
+    }
+}
+
+plugins {
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'java-library'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    group = 'com.example'
+    sourceCompatibility = 11
+    compileJava.options.encoding = 'UTF-8'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+
+        implementation{
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-reactor-netty'
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

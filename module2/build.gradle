@@ -1,0 +1,16 @@
+plugins {
+    id 'org.springframework.boot' version "$springBootVersion"
+}
+
+dependencies {
+    implementation project(':base')
+    implementation fileTree(dir: 'libs', include: '*.jar')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '6.9.1'
+}
+
+bootJar {
+    exclude('application.properties')
+}
